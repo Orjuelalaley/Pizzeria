@@ -37,7 +37,7 @@ Este proyecto contiene el código fuente para el backend de una pizzería en des
 5. Espera la revisión y aprobación de tus cambios.
 
 ## Contacto
-Si tienes preguntas o sugerencias relacionadas con el proyecto, no dudes en ponerte en contacto con nosotros a través de nuestra dirección de correo electrónico: contacto@pizzeria.com
+Si tienes preguntas o sugerencias relacionadas con el proyecto, no dudes en ponerte en contacto con nosotros a través de nuestra dirección de correo electrónico: sebasorjuela@gmail.com
 
 ¡Gracias por contribuir y ser parte de este emocionante proyecto de Pizzería Backend!
 
