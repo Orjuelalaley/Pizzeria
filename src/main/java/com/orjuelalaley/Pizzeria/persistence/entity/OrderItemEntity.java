@@ -1,5 +1,6 @@
 package com.orjuelalaley.Pizzeria.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +32,12 @@ public class OrderItemEntity {
     private Double price;
 
     @OneToOne
+
     @JoinColumn(name = "id_pizza", referencedColumnName ="id_pizza",insertable = false, updatable = false)
     private PizzaEntity pizza;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_order", referencedColumnName ="id_order",insertable = false, updatable = false)
     private OrderEntity order;
 

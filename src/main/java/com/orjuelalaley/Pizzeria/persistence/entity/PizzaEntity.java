@@ -16,7 +16,6 @@ public class PizzaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pizza", nullable = false)
     private Integer id_pizza;
-
     @Column(nullable = false, length = 30, unique = true)
     private String name;
 

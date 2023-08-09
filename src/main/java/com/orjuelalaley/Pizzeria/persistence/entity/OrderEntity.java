@@ -1,5 +1,6 @@
 package com.orjuelalaley.Pizzeria.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,11 +36,12 @@ public class OrderEntity {
     @Column(name = "additional_notes",length = 200)
     private String additionalNotes;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY) //no cargue la relacion hasta que se necesite
+    @JsonIgnore
     @JoinColumn(name = "id_customer", referencedColumnName ="id_customer",insertable = false, updatable = false)
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER) //cargue la relacion cuando se necesite
     private List<OrderItemEntity> orderItems;
 
 
