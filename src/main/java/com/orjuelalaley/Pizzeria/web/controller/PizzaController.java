@@ -85,8 +85,38 @@ public class PizzaController {
      */
 
     @GetMapping("/available")
-    public ResponseEntity<List<PizzaEntity>> GetAvailable(){
-        return ResponseEntity.status(HttpStatus.OK).body(this.pizzaService.getAllAvailable());
+    public ResponseEntity<?> GetAvailable(){
+        try {
+            if (this.pizzaService.getAllAvailable().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no available pizzas");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(this.pizzaService.getAllAvailable());
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Retrieves a pizza by name if it is available
+     * @param name The name of the pizza to be retrieved
+     * @return A PizzaEntity object representing the pizza retrieved
+     */
+
+    @GetMapping("/available/{name}")
+    public ResponseEntity<?> getByName(@PathVariable String name){
+        try {
+            PizzaEntity pizzaEntity = this.pizzaService.getByName(name);
+            if (isNull(pizzaEntity)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The pizza doesn't exist or is not available");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(pizzaEntity);
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     /**
