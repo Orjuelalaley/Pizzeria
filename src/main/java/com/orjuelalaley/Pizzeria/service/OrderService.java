@@ -37,8 +37,6 @@ public class OrderService {
      */
 
     public List<OrderEntity> getAll() {
-        List<OrderEntity> orders = orderRepository.findAll();
-        orders.forEach(o -> System.out.println(o.getCustomer().getName()));
         return this.orderRepository.findAll();
     }
 

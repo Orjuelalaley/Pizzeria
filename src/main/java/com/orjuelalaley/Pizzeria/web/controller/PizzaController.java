@@ -80,6 +80,16 @@ public class PizzaController {
     }
 
     /**
+     * Retrieves all available pizzas in the pizzeria.
+     * @return A list of PizzaEntity objects representing all available pizzas.
+     */
+
+    @GetMapping("/available")
+    public ResponseEntity<List<PizzaEntity>> GetAvailable(){
+        return ResponseEntity.status(HttpStatus.OK).body(this.pizzaService.getAllAvailable());
+    }
+
+    /**
      * Saves a pizza in the pizzeria database
      * @param pizzaEntity The pizza to be saved
      * @return A PizzaEntity object representing the pizza saved

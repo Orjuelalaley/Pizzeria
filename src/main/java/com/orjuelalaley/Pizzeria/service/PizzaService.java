@@ -45,6 +45,15 @@ public class PizzaService {
     }
 
     /**
+     * Retrieves all available pizzas in the pizzeria.
+     * @return A list of PizzaEntity objects representing all available pizzas.
+     */
+
+    public List<PizzaEntity> getAllAvailable() {
+        return this.pizzaRepository.findAllByAvailableTrueOrderByPrice();
+    }
+
+    /**
      * Retrieves a pizza by its identifier.
      *
      * @param id The unique identifier of the pizza to be retrieved.
