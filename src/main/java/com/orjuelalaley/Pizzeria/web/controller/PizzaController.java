@@ -42,10 +42,11 @@ public class PizzaController {
      * Retrieves all available pizzas in the pizzeria.
      * @return A list of PizzaEntity objects representing all available pizzas.
      */
+
     @GetMapping
-    public ResponseEntity<List<PizzaEntity>> getAll(){
+    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int elements){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(pizzaService.getAll());
+            return ResponseEntity.status(HttpStatus.OK).body(pizzaService.getAll(page, elements));
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();

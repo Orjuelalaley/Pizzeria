@@ -1,10 +1,12 @@
 package com.orjuelalaley.Pizzeria.service;
 
-import com.orjuelalaley.Pizzeria.Exception.DatabaseException;
 import com.orjuelalaley.Pizzeria.persistence.entity.PizzaEntity;
+import com.orjuelalaley.Pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.orjuelalaley.Pizzeria.persistence.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,16 +27,24 @@ public class PizzaService {
      * This attribute is the repository of the pizza entity
      * @see PizzaRepository
      */
-
     private final PizzaRepository pizzaRepository;
 
     /**
+     * This attribute is the repository in charge of paginating and sorting the pizzas
+     * @see PizzaPagSortRepository
+     */
+    private final PizzaPagSortRepository pizzaPagSortRepository;
+
+    /**
      * Constructor of the PizzaService class.
-     * @param pizzaRepository The pizza repository to be injected via autowiring.
+     *
+     * @param pizzaRepository        The pizza repository to be injected via autowiring.
+     * @param pizzaPagSortRepository The pizzaPagSortRepository to be injected via autowiring.
      */
     @Autowired
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, PizzaPagSortRepository pizzaPagSortRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.pizzaPagSortRepository = pizzaPagSortRepository;
     }
 
     /**
@@ -42,8 +52,9 @@ public class PizzaService {
      *
      * @return A list of PizzaEntity objects representing all available pizzas.
      */
-    public List<PizzaEntity> getAll() {
-        return this.pizzaRepository.findAll();
+    public Page<PizzaEntity> getAll(int page, int elements) {
+        Pageable pageRequest = PageRequest.of(page, elements);
+        return this.pizzaPagSortRepository.findAll(pageRequest);
     }
 
     /**
@@ -94,6 +105,11 @@ public class PizzaService {
         this.pizzaRepository.deleteById(idPizza);
     }
 
+    /**
+     * Retrieves a pizza by its name and if it is available.
+     * @param name The name of the pizza to be retrieved it doesn't matter if it is in uppercase or lowercase.
+     * @return A PizzaEntity object representing the found pizza, or null if no pizza is found with the given name.
+     */
     public PizzaEntity getByName(String name) {
         return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name);
     }
