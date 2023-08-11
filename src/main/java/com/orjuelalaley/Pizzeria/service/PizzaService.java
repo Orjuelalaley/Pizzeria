@@ -105,4 +105,8 @@ public class PizzaService {
     public List<PizzaEntity> getWithout(String ingredientName) {
         return this.pizzaRepository.findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(ingredientName);
     }
+
+    public int getAllVegan(){
+        return this.pizzaRepository.countAllByVeganTrue();
+    }
 }

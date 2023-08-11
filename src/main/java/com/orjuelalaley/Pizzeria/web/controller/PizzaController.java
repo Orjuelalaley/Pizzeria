@@ -12,12 +12,6 @@ import static java.util.Objects.isNull;
 
 /**
  * This class is the controller of the pizza entity
- * in this class we can find the methods to get:
- * all the pizzas and a pizza by id
- * post a pizza
- * put a pizza
- * delete a pizza
- * @since 2023
  * @author orjuelalaley
  */
 
@@ -87,12 +81,28 @@ public class PizzaController {
     @GetMapping("/available")
     public ResponseEntity<?> GetAvailable(){
         try {
-            if (this.pizzaService.getAllAvailable().isEmpty()) {
+             if(this.pizzaService.getAllAvailable().isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no available pizzas");
             }else {
                 return ResponseEntity.status(HttpStatus.OK).body(this.pizzaService.getAllAvailable());
             }
         } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @GetMapping("/available/vegan")
+    public ResponseEntity<?> GetVegan(){
+        try {
+            if (this.pizzaService.getAllVegan() <= 0){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Vegan pizzas in the menu");
+            }else if(this.pizzaService.getAllVegan() == 1){
+                return ResponseEntity.status(HttpStatus.OK).body("there are "+ this.pizzaService.getAllVegan() + " vegan pizza available in the menu");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body("There are " + this.pizzaService.getAllVegan() + " vegan pizzas available in the menu");
+            }
+
+        }catch (Exception e){
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }

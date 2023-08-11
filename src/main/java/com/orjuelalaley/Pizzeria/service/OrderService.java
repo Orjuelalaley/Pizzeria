@@ -4,6 +4,11 @@ import com.orjuelalaley.Pizzeria.persistence.entity.OrderEntity;
 import com.orjuelalaley.Pizzeria.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,6 +25,9 @@ public class OrderService {
      * @see OrderRepository
      */
     private final OrderRepository orderRepository;
+
+    private static final String DELIVERY = "D";
+    private static final String CARRYOUT = "C";
 
     /**
      * Constructor of the OrderService class.
@@ -38,6 +46,25 @@ public class OrderService {
 
     public List<OrderEntity> getAll() {
         return this.orderRepository.findAll();
+    }
+
+    /**
+     * Retrieves all orders that are planed after today
+     * @return a list of OrderEntity
+     */
+    public List<OrderEntity> getAfterTodayOrders() {
+        LocalDateTime today = LocalDate.now().atStartOfDay();
+        return this.orderRepository.findAllByDateAfter(today);
+    }
+
+    /**
+     * Retrieves all orders that are for delivery or carryout.
+     * @return A list of OrderEntity objects representing all outside orders.
+     */
+
+    public List<OrderEntity> getOutsideOrders() {
+        List<String> methods = Arrays.asList(DELIVERY, CARRYOUT);
+        return this.orderRepository.findAllByMethodIn(methods);
     }
 
 }

@@ -19,7 +19,6 @@ import java.util.List;
  * post an order
  * put an order
  * delete an order
- * @since 2023
  * @author orjuelalaley
  */
 
@@ -42,4 +41,36 @@ public class OrderController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     * This method is used to get all the orders after today
+     * @return a list of orders after today
+     */
+
+    @GetMapping("/today")
+    public ResponseEntity<?> getAfterTodayOrders(){
+        try {
+            if (orderService.getAfterTodayOrders().isEmpty())
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No orders after today");
+            else
+                return ResponseEntity.status(HttpStatus.OK).body(orderService.getAfterTodayOrders());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/outside")
+    public ResponseEntity<?> getOutsideOrders(){
+        try {
+            if (orderService.getOutsideOrders().isEmpty())
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No outside orders");
+            else
+                return ResponseEntity.status(HttpStatus.OK).body(orderService.getOutsideOrders());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }
