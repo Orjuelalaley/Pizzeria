@@ -120,6 +120,70 @@ public class PizzaController {
     }
 
     /**
+     * Retrieves all available pizzas in the pizzeria with a specific ingredient
+     * @param ingredient The ingredient of the pizzas to be retrieved
+     * @return A list of PizzaEntity objects representing all available pizzas with the ingredient
+     */
+
+    @GetMapping("with/{ingredient}")
+    public ResponseEntity<?> getByIngredient(@PathVariable String ingredient){
+        try {
+            List<PizzaEntity> pizzaEntities = this.pizzaService.getWith(ingredient);
+            if (pizzaEntities.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no pizzas with this ingredient");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(pizzaEntities);
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Retrieves all available pizzas in the pizzeria with a price between min and max
+     * @param min The minimum price of the pizzas to be retrieved
+     * @param max The maximum price of the pizzas to be retrieved
+     * @return A list of PizzaEntity objects representing all available pizzas with the price between min and max
+     */
+
+    @GetMapping("/price/{min}/{max}")
+    public ResponseEntity<?> getByPrice(@PathVariable double min, @PathVariable double max){
+        try {
+            List<PizzaEntity> pizzaEntities = this.pizzaService.getByPrice(min, max);
+            if (pizzaEntities.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no pizzas with this price");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(pizzaEntities);
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * Retrieves all available pizzas in the pizzeria without a specific ingredient
+     * @param ingredient The ingredient of the pizzas to be retrieved
+     * @return A list of PizzaEntity objects representing all available pizzas without the ingredient
+     */
+
+    @GetMapping("without/{ingredient}")
+    public ResponseEntity<?> getByIngredientNot(@PathVariable String ingredient){
+        try {
+            List<PizzaEntity> pizzaEntities = this.pizzaService.getWithout(ingredient);
+            if (pizzaEntities.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no pizzas without this ingredient");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(pizzaEntities);
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
      * Saves a pizza in the pizzeria database
      * @param pizzaEntity The pizza to be saved
      * @return A PizzaEntity object representing the pizza saved

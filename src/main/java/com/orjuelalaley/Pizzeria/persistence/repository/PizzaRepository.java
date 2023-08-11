@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer> {
-    /**
-     * This method is used to find a pizza by its id
-     * @return A pizza entity that matches the available parameter
-     */
 
     List<PizzaEntity> findAllByAvailableTrueOrderByPrice();
     PizzaEntity findAllByAvailableTrueAndNameIgnoreCase(String name);
-
-    PizzaEntity searchAllByDescriptionAndAvailableTrue(String description);
+    List<PizzaEntity> searchAllByAvailableTrueAndDescriptionContainingIgnoreCase(String description);
+    List<PizzaEntity> findAllByAvailableTrueAndPriceBetweenOrderByPrice(double min, double max);
+    List<PizzaEntity> findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(String ingredientName);
 }
