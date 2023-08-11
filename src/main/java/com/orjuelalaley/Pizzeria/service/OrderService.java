@@ -28,6 +28,7 @@ public class OrderService {
 
     private static final String DELIVERY = "D";
     private static final String CARRYOUT = "C";
+    private static final String ON_SITE = "S";
 
     /**
      * Constructor of the OrderService class.

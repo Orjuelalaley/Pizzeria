@@ -91,6 +91,12 @@ public class PizzaController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     * Retrieves all available pizzas in the pizzeria that are vegan.
+     * @return A list of PizzaEntity objects representing all available pizzas that are vegan.
+     */
+
     @GetMapping("/available/vegan")
     public ResponseEntity<?> GetVegan(){
         try {
@@ -125,7 +131,7 @@ public class PizzaController {
             }
         }catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -192,6 +198,22 @@ public class PizzaController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/price/{price}")
+    public ResponseEntity<?> getCheapestPizza(@PathVariable double price){
+        try {
+            List<PizzaEntity> pizzaEntities = this.pizzaService.getCheapest(price);
+            if (pizzaEntities.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no pizzas with this price");
+            }else {
+                return ResponseEntity.status(HttpStatus.OK).body(pizzaEntities);
+            }
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 
     /**
      * Saves a pizza in the pizzeria database

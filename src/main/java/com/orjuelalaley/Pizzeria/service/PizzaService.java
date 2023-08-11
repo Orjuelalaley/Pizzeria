@@ -1,8 +1,10 @@
 package com.orjuelalaley.Pizzeria.service;
 
+import com.orjuelalaley.Pizzeria.Exception.DatabaseException;
 import com.orjuelalaley.Pizzeria.persistence.entity.PizzaEntity;
 import com.orjuelalaley.Pizzeria.persistence.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,7 +95,7 @@ public class PizzaService {
     }
 
     public PizzaEntity getByName(String name) {
-        return this.pizzaRepository.findAllByAvailableTrueAndNameIgnoreCase(name);
+        return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name);
     }
     public List<PizzaEntity> getWith(String ingredient) {
         return this.pizzaRepository.searchAllByAvailableTrueAndDescriptionContainingIgnoreCase(ingredient);
@@ -101,12 +103,14 @@ public class PizzaService {
     public List<PizzaEntity> getByPrice(double min, double max) {
         return this.pizzaRepository.findAllByAvailableTrueAndPriceBetweenOrderByPrice(min, max);
     }
-
     public List<PizzaEntity> getWithout(String ingredientName) {
         return this.pizzaRepository.findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(ingredientName);
     }
-
     public int getAllVegan(){
         return this.pizzaRepository.countAllByVeganTrue();
+    }
+
+    public List<PizzaEntity> getCheapest(double price){
+        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
     }
 }
