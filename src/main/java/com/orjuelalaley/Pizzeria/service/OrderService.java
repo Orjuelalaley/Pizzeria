@@ -20,6 +20,7 @@ import java.util.List;
 
 @Service
 public class OrderService {
+
     /**
      * This attribute is the repository of the order entity
      * @since 2023
@@ -35,7 +36,6 @@ public class OrderService {
      * Constructor of the OrderService class.
      * @param orderRepository The order repository to be injected via autowiring.
      */
-
     @Autowired
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -45,7 +45,6 @@ public class OrderService {
      * Retrieves all available orders in the pizzeria.
      * @return A list of OrderEntity objects representing all available orders.
      */
-
     public List<OrderEntity> getAll() {
         return this.orderRepository.findAll();
     }
@@ -63,15 +62,25 @@ public class OrderService {
      * Retrieves all orders that are for delivery or carryout.
      * @return A list of OrderEntity objects representing all outside orders.
      */
-
     public List<OrderEntity> getOutsideOrders() {
         List<String> methods = Arrays.asList(DELIVERY, CARRYOUT);
         return this.orderRepository.findAllByMethodIn(methods);
     }
 
+    /**
+     * Retrieves all orders that are for on-site consumption.
+     * @param id_customer the id of the customer
+     * @return A list of OrderEntity objects representing all orders of a customer.
+     */
     public List<OrderEntity> getCustomerOrders(String id_customer) {
         return this.orderRepository.findCustomerOrders(id_customer);
     }
+
+    /**
+     * This is the service method to get the summary of an order
+     * @param orderId the id of the order
+     * @return the summary of the order
+     */
     public OrderSummary getOrderSummary(Integer orderId) {
         return this.orderRepository.findSummary(orderId);
     }

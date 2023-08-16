@@ -24,6 +24,14 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
     @Query(value = "SELECT * FROM pizza_order o WHERE id_customer = :id", nativeQuery = true)
     List<OrderEntity> findCustomerOrders(@Param("id") String id_customer);
 
+    /**
+     * This method is used to get the summary of an order
+     * the summary contains the id of the order, the name of the customer,
+     * the date of the order, the total of the order and the names of the pizzas
+     * we use native SQL to get the summary
+     * @param orderId the id of the order
+     * @return the summary of the order
+     */
     @Query(value =
             "SELECT po.id_order AS idOrder, cu.name AS customerName, po.date AS orderDate," +
             "       po.total AS orderTotal, GROUP_CONCAT(pi.name) AS pizzaNames " +

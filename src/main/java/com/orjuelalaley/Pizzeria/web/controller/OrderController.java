@@ -87,6 +87,12 @@ public class OrderController {
         }
     }
 
+    /**
+     * This method is used to get the summary of an order through its id
+     * @param id_order the id of the order
+     * @return the summary of the order or an error if the order is not found
+     */
+
     @GetMapping("/summary/{id_order}")
     public ResponseEntity<?> getOrderById(@PathVariable Integer id_order){
         try {

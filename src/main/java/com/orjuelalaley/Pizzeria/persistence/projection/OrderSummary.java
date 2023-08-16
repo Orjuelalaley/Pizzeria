@@ -2,8 +2,10 @@ package com.orjuelalaley.Pizzeria.persistence.projection;
 
 import java.time.LocalDateTime;
 
+/**
+ * This interface provides methods to retrieve an orderSummary from the database.
+ */
 public interface OrderSummary {
-    //no se tiene que respetar ningun alineamiento
      Integer getIdOrder();
     String getCustomerName();
     LocalDateTime getOrderDate();
