@@ -10,5 +10,5 @@ public interface OrderSummary {
     String getCustomerName();
     LocalDateTime getOrderDate();
     Double getOrderTotal();
-    String PizzaNames();
+    String getPizzaNames();
 }
