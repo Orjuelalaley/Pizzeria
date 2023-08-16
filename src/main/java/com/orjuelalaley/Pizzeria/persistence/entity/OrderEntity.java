@@ -41,7 +41,8 @@ public class OrderEntity {
     @JoinColumn(name = "id_customer", referencedColumnName ="id_customer",insertable = false, updatable = false)
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER) //cargue la relacion cuando se necesite
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OrderBy("price DESC ")
     private List<OrderItemEntity> orderItems;
 
 

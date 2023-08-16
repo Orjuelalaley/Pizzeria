@@ -1,6 +1,7 @@
 package com.orjuelalaley.Pizzeria.service;
 
 import com.orjuelalaley.Pizzeria.persistence.entity.OrderEntity;
+import com.orjuelalaley.Pizzeria.persistence.projection.OrderSummary;
 import com.orjuelalaley.Pizzeria.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,13 @@ public class OrderService {
     public List<OrderEntity> getOutsideOrders() {
         List<String> methods = Arrays.asList(DELIVERY, CARRYOUT);
         return this.orderRepository.findAllByMethodIn(methods);
+    }
+
+    public List<OrderEntity> getCustomerOrders(String id_customer) {
+        return this.orderRepository.findCustomerOrders(id_customer);
+    }
+    public OrderSummary getOrderSummary(Integer orderId) {
+        return this.orderRepository.findSummary(orderId);
     }
 
 }
