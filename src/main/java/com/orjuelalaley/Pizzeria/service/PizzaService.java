@@ -3,22 +3,18 @@ package com.orjuelalaley.Pizzeria.service;
 import com.orjuelalaley.Pizzeria.persistence.entity.PizzaEntity;
 import com.orjuelalaley.Pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.orjuelalaley.Pizzeria.persistence.repository.PizzaRepository;
+import com.orjuelalaley.Pizzeria.service.DTO.UpdatePizzaPriceDTO;
+import com.orjuelalaley.Pizzeria.service.exception.EmailApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * This class provides services related to pizzas.
- * It contains methods to retrieve:
- * all pizzas
- * get a pizza by its identifier.
- * post a pizza
- * edit the information of a pizza
- * delete a pizza
+ * This class provides services related to pizzas and the management of the pizza repository.
  * @author Sebastián Orjuela Sánchez.
  */
 @Service
@@ -128,5 +124,24 @@ public class PizzaService {
 
     public List<PizzaEntity> getCheapest(double price){
         return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
+    }
+
+    /**
+     * Updates the price of a pizza.
+     * This method is transactional that means that if an error occurs during the execution of the method
+     * the changes will be rolled back and the price of the pizza will not be updated.
+     * @param updatePizzaPriceDTO The DTO that contains the new price of the pizza and its identifier.
+     */
+    @Transactional()// This annotation indicates that if an error occurs it will not be rolled back.
+    public void updatePrice(UpdatePizzaPriceDTO updatePizzaPriceDTO) {
+        this.pizzaRepository.updatePrice(updatePizzaPriceDTO);
+    }
+
+    /**
+     * This method is used to test the exception handling.
+     * @throws EmailApiException This exception is thrown to test the exception handling.
+     */
+    private void sendEmail() {
+        throw new EmailApiException();
     }
 }

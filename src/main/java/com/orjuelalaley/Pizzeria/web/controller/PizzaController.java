@@ -1,6 +1,7 @@
 package com.orjuelalaley.Pizzeria.web.controller;
 
 import com.orjuelalaley.Pizzeria.persistence.entity.PizzaEntity;
+import com.orjuelalaley.Pizzeria.service.DTO.UpdatePizzaPriceDTO;
 import com.orjuelalaley.Pizzeria.service.PizzaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,6 +238,15 @@ public class PizzaController {
     public ResponseEntity<?> update(@RequestBody PizzaEntity pizzaEntity){
         if (pizzaEntity.getId_pizza() != null && this.pizzaService.exist(pizzaEntity.getId_pizza())) {
             return ResponseEntity.ok(this.pizzaService.save(pizzaEntity));
+        } else{
+            return ResponseEntity.badRequest().body("The pizza doesn't exist");
+        }
+    }
+    @PutMapping("/update/price")
+    public ResponseEntity<?> updatePrice(@RequestBody UpdatePizzaPriceDTO DTO){
+        if (this.pizzaService.exist(DTO.getIdPizza())) {
+            this.pizzaService.updatePrice(DTO);
+            return ResponseEntity.ok().body("The pizza price was updated");
         } else{
             return ResponseEntity.badRequest().body("The pizza doesn't exist");
         }
