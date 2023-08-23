@@ -1,15 +1,14 @@
 package com.orjuelalaley.Pizzeria.web.controller;
 
+import com.orjuelalaley.Pizzeria.Exception.ErrorDTO;
 import com.orjuelalaley.Pizzeria.persistence.entity.OrderEntity;
+import com.orjuelalaley.Pizzeria.service.DTO.RandomOrderDTO;
 import com.orjuelalaley.Pizzeria.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -92,7 +91,6 @@ public class OrderController {
      * @param id_order the id of the order
      * @return the summary of the order or an error if the order is not found
      */
-
     @GetMapping("/summary/{id_order}")
     public ResponseEntity<?> getOrderById(@PathVariable Integer id_order){
         try {
@@ -108,4 +106,8 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/random")
+    public ResponseEntity<Boolean> RandomOrder(@RequestBody RandomOrderDTO dto){
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.saveRandomOrder(dto));
+    }
 }

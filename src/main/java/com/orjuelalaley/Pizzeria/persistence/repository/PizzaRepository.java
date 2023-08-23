@@ -18,6 +18,12 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
     List<PizzaEntity> findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(String ingredientName);
     Integer countAllByVeganTrue();
     List<PizzaEntity> findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(Double price);
+
+    /**
+     * This method is used to update the price of a pizza
+     * we use native SQL to update the price
+     * @param newPizzaPrice the new price of the pizza
+     */
     @Query(value = "UPDATE pizza SET price = :#{#newPizzaPrice.price} WHERE id_pizza = :#{#newPizzaPrice.idPizza}", nativeQuery = true)
     @Modifying
     void updatePrice(UpdatePizzaPriceDTO newPizzaPrice);

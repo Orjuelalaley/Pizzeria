@@ -1,18 +1,23 @@
 package com.orjuelalaley.Pizzeria.persistence.entity;
 
+import com.orjuelalaley.Pizzeria.persistence.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pizza")
+@EntityListeners({AuditingEntityListener.class})
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class PizzaEntity extends AuditableEntity{
+@ToString
+
+public class PizzaEntity extends AuditableEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pizza", nullable = false)

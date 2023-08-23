@@ -2,6 +2,7 @@ package com.orjuelalaley.Pizzeria.Exception;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
