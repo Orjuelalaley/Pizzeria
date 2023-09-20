@@ -1,5 +1,4 @@
-# Pizzería Backend - README
-
+# Pizzería Backend
 ¡Bienvenido al repositorio del backend de nuestra Pizzería!
 
 ## Descripción

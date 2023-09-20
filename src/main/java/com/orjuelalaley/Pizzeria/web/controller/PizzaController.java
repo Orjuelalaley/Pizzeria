@@ -242,6 +242,7 @@ public class PizzaController {
             return ResponseEntity.badRequest().body("The pizza doesn't exist");
         }
     }
+
     @PutMapping("/update/price")
     public ResponseEntity<?> updatePrice(@RequestBody UpdatePizzaPriceDTO DTO){
         if (this.pizzaService.exist(DTO.getIdPizza())) {
