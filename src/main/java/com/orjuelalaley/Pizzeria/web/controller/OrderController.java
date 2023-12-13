@@ -1,6 +1,5 @@
 package com.orjuelalaley.Pizzeria.web.controller;
 
-import com.orjuelalaley.Pizzeria.Exception.ErrorDTO;
 import com.orjuelalaley.Pizzeria.persistence.entity.OrderEntity;
 import com.orjuelalaley.Pizzeria.service.DTO.RandomOrderDTO;
 import com.orjuelalaley.Pizzeria.service.OrderService;
