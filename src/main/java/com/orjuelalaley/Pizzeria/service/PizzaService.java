@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -63,13 +64,14 @@ public class PizzaService {
     }
 
     /**
-     * Retrieves a pizza by its identifier.
-     *
-     * @param id The unique identifier of the pizza to be retrieved.
-     * @return A PizzaEntity object representing the found pizza, or null if no pizza is found with the given identifier.
+     * Retrieves all available pizzas in the pizzeria.
+     * @return A list of PizzaEntity objects representing all available pizzas.
      */
-    public PizzaEntity getById(Integer id) {
-        return this.pizzaRepository.findById(id).orElse(null);
+
+    public Page<PizzaEntity> getAvailable(int page, int elements, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort);
+        return this.pizzaPagSortRepository.findByAvailableTrue(pageRequest);
     }
     /**
      * Saves a pizza in the database.
@@ -143,5 +145,9 @@ public class PizzaService {
      */
     private void sendEmail() {
         throw new EmailApiException();
+    }
+
+    public PizzaEntity getById(Integer idPizza) {
+        return this.pizzaRepository.findById(idPizza).orElse(null);
     }
 }

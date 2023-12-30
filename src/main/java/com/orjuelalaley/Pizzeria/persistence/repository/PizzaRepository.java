@@ -27,4 +27,6 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
     @Query(value = "UPDATE pizza SET price = :#{#newPizzaPrice.price} WHERE id_pizza = :#{#newPizzaPrice.idPizza}", nativeQuery = true)
     @Modifying
     void updatePrice(UpdatePizzaPriceDTO newPizzaPrice);
+
+    int countByVeganTrue();
 }

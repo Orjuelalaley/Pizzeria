@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Esta es la clase que ejecuta la aplicación
  * Esta clase tiene habilitado el uso de JPARespositories
  */
+
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableJpaAuditing

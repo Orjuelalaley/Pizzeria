@@ -45,7 +45,8 @@ public class PizzaController {
      */
 
     @GetMapping
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int elements){
+    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "8") int elements){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(pizzaService.getAll(page, elements));
         } catch (Exception e) {
@@ -81,17 +82,11 @@ public class PizzaController {
      */
 
     @GetMapping("/available")
-    public ResponseEntity<?> GetAvailable(){
-        try {
-             if(this.pizzaService.getAllAvailable().isEmpty()){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no available pizzas");
-            }else {
-                return ResponseEntity.status(HttpStatus.OK).body(this.pizzaService.getAllAvailable());
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity.internalServerError().build();
-        }
+    public ResponseEntity<?> GetAvailable(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "8") int elements,
+                                          @RequestParam(defaultValue = "price") String sortBy,
+                                          @RequestParam(defaultValue = "ASC") String sortDirection){
+        return ResponseEntity.ok(this.pizzaService.getAvailable(page, elements, sortBy, sortDirection));
     }
 
     /**
@@ -236,6 +231,7 @@ public class PizzaController {
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody PizzaEntity pizzaEntity){
+        System.out.println(pizzaEntity);
         if (pizzaEntity.getId_pizza() != null && this.pizzaService.exist(pizzaEntity.getId_pizza())) {
             return ResponseEntity.ok(this.pizzaService.save(pizzaEntity));
         } else{
@@ -263,3 +259,6 @@ public class PizzaController {
         }
     }
 }
+
+
+
